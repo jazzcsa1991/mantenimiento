@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  hts-backend-administrativo:
+    container_name: hts-backend-administrativo-mantenimiento
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5055:5055"
+    environment:
+      - EUREKA_SERVER=hts-backend-eureka-server
+
+networks:
+  default:
+    external:
+      name: hts-backend-network

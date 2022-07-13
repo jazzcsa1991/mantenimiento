@@ -1,0 +1,63 @@
+keycloak:
+  authServerUrl: http://ec2-3-89-248-143.compute-1.amazonaws.com:8080
+  credentials:
+    secret: uGTI7DQIxPTEaV9HO1CJrRjev9Fj9p1p
+  realm: HTS
+  resource: hts-backend
+  sslRequired: none
+  useResourceRoleMappings: true
+  
+server:
+  port: 5055
+  
+security:
+ allowed-admin:
+  - /no-exist
+
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    name: datasource
+    password: qblug0gk5jgmu8yf
+    url: jdbc:mariadb://cxmgkzhk95kfgbq4.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/pfkerr1iferwy9q0
+    username: hsh1pwbhy1tspwam
+  jpa:
+    open-in-view: false
+    show-sql: false
+  hikari:
+      connection-test-query: SELECT version()
+      connection-timeout: 600000
+      maximum-pool-size: 500
+      max-lifetime: 1800000
+      minimum-idle: 20
+      validation-timeout: 3000
+      idle-timeout: 60000
+  application:
+    name: hts-backend-administrativo
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+    discovery:
+      enabled: true
+  config:
+    import: optional:configserver:http://localhost:6090
+    uri: http://localhost:6090
+    token: s.31RHtnW0ebMzYVhtt7AdsbJO
+ 
+logging:
+  file:
+    name: HTS-Mantenimiento.log
+  pattern:
+    rolling-file-name: HTS-Mantenimiento-%d{yyyy-MM-dd}.%i.log
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.int}
+    hostname: ${EUREKA_SERVER:0.0.0.0}
+    prefer-ip-address: true
+  client:
+    healthcheck:
+      enabled: true
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:7761/eureka/
