@@ -61,7 +61,7 @@ public interface GenericHibernateDAO {
 	 * @param params
 	 * @return Objeto Query
 	 */
-	public Query getNamedQueryGeneral(String query, Object... params);
+	public Query getNamedQueryGeneral(String query, Session s, Object... params);
 
 	/**
 	 * Realiza consultas por medio de nameQuerys

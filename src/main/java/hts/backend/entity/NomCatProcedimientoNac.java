@@ -1,0 +1,98 @@
+package hts.backend.entity;
+
+import hts.backend.entity.HspDatosParto;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
+
+/**
+ * Created by SASA Desarrollo on 18/08/2017.
+ */
+@Entity
+@Table(name = "nom_cat_procedimiento_nac")
+public class NomCatProcedimientoNac implements Serializable {
+	private static final long serialVersionUID = 1L;
+	private Integer procedimientoNacId;
+	private String cve;
+	private String nombre;
+	private String descripcion;
+	private Integer valorDefault;
+	private Integer estatus;
+	private Date fechaRegistro;
+	private String usuarioRegistro;
+	private Collection<HspDatosParto> hspDatosPartosByProcedimientoNacId;
+
+	@Id @Column(name = "PROCEDIMIENTO_NAC_ID") public Integer getProcedimientoNacId() {
+		return procedimientoNacId;
+	}
+
+	public void setProcedimientoNacId(Integer procedimientoNacId) {
+		this.procedimientoNacId = procedimientoNacId;
+	}
+
+	@Basic @Column(name = "CVE") public String getCve() {
+		return cve;
+	}
+
+	public void setCve(String cve) {
+		this.cve = cve;
+	}
+
+	@Basic @Column(name = "NOMBRE") public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	@Basic @Column(name = "DESCRIPCION") public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	@Basic @Column(name = "VALOR_DEFAULT") public Integer getValorDefault() {
+		return valorDefault;
+	}
+
+	public void setValorDefault(Integer valorDefault) {
+		this.valorDefault = valorDefault;
+	}
+
+	@Basic @Column(name = "ESTATUS") public Integer getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(Integer estatus) {
+		this.estatus = estatus;
+	}
+
+	@Basic @Column(name = "FECHA_REGISTRO") public Date getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	@Basic @Column(name = "USUARIO_REGISTRO") public String getUsuarioRegistro() {
+		return usuarioRegistro;
+	}
+
+	public void setUsuarioRegistro(String usuarioRegistro) {
+		this.usuarioRegistro = usuarioRegistro;
+	}
+
+	@OneToMany(mappedBy = "nomCatProcedimientoNac") public Collection<HspDatosParto> getHspDatosPartosByProcedimientoNacId() {
+		return hspDatosPartosByProcedimientoNacId;
+	}
+
+	public void setHspDatosPartosByProcedimientoNacId(Collection<HspDatosParto> hspDatosPartosByProcedimientoNacId) {
+		this.hspDatosPartosByProcedimientoNacId = hspDatosPartosByProcedimientoNacId;
+	}
+}
