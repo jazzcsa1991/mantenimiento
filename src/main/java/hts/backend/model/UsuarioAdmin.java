@@ -2,6 +2,9 @@ package hts.backend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import hts.backend.controller.CatalogosController;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,10 +12,14 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 @Entity
 @Table(name = "admin_usuario")
 public class UsuarioAdmin implements UserDetails {
+
+	private static final Log logger = LogFactory.getLog(CatalogosController.class);
 	private static final long serialVersionUID = 1L;
 
 	private Integer usuarioAdminId;
@@ -37,6 +44,7 @@ public class UsuarioAdmin implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "USUARIO_ADMIN_ID", updatable = false, unique = true, nullable = false)
 	public Integer getUsuarioAdminId() {
+		logger.info("############# OBTENIENDO PERMISOS 3  #####################");
 		return usuarioAdminId;
 	}
 
@@ -154,6 +162,8 @@ public class UsuarioAdmin implements UserDetails {
 	@Basic
 	@Column(name = "PERMISOS")
 	public String getPermisos() {
+
+		logger.info("############# OBTENIENDO PERMISOS 3  #####################");
 		return permisos;
 	}
 

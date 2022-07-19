@@ -1,5 +1,6 @@
 package hts.backend.service.impl;
 
+import hts.backend.controller.CatalogosController;
 import hts.backend.model.CoreConfigAsistencia;
 import hts.backend.model.UsuarioAdmin;
 import hts.backend.dao.AdminPermisosDAO;
@@ -16,6 +17,8 @@ import hts.backend.entity.CoreAseguradoraHospital;
 import hts.backend.entity.PacConvenioAseguradora;
 import hts.backend.entity.AdmCatTipoHospital;
 import hts.backend.entity.AdmHospital;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -38,6 +41,7 @@ public class HospitalServiceImpl implements HospitalService {
 	private int ERROR = EstatusResponse.ERROR.getEstatus();
 	private int OK = EstatusResponse.OK.getEstatus();
 	private String msjOK = "Servicio ejecutado correctamente";
+	private static final Log logger = LogFactory.getLog(CatalogosController.class);
 
 	@Resource
 	private HospitalDAO hospitalDAO;
@@ -199,7 +203,7 @@ public class HospitalServiceImpl implements HospitalService {
 
 	@Override
 	public RespuestaGenerica guardarHospital(HospitalDTO hospitaldto) {
-
+		logger.info("######## aqui siiii ###############");
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		UsuarioAdmin usuario = (UsuarioAdmin) auth.getPrincipal();
 		if (Integer.parseInt(String.valueOf(usuario.getPermisos().charAt(0))) != 1 && usuario.getRoot() != 1) {
@@ -207,7 +211,7 @@ public class HospitalServiceImpl implements HospitalService {
 		}
 		AdmCatTipoHospital tipoHospital = hospitalDAO.get(AdmCatTipoHospital.class, hospitaldto.getIdTipoHospsital());
 
-
+		logger.info("######## hospital 2 ###############");
 		hospitaldto.setCatTipoEstablecimiento(hospitalDAO.obtenerCatTipoEstablecimientoPorID(hospitaldto.getIdTipoEstablecimiento()));
 		hospitaldto.setCatEstadoJurisdiccion(hospitalDAO.CatEstadoJurisdiccionPorID(hospitaldto.getIdEstadoJurisdiccion()));
 		hospitaldto.setCatTipoServ(hospitalDAO.obtenerCatTipoServPorID(hospitaldto.getTiposervicio()));
@@ -216,25 +220,41 @@ public class HospitalServiceImpl implements HospitalService {
 		hospitaldto.setIdTipoHospsital(tipoHospital.getTipoHospitalId());
 		hospitaldto.setEstatus(1);
 
-
+		logger.info("######## hospital 2.1 ###############");
 		Integer hospital = hospitalDAO.guardarHospital(hospitaldto);
+		logger.info("######## hospital 2.2 ###############");
 
 		for (AdmLogosDTO logos : hospitaldto.getAdmLogosDTO()) {
-
+			logger.info("######## hospital 2.2.1 ###############");
 			AdminLogos admLogos = new AdminLogos();
+			logger.info("######## hospital 2.2.2 ###############");
+			logger.info(hospital);
 			admLogos.setIdHospital(hospital);
+			logger.info(admLogos.getIdHospital());
+			logger.info("######## hospital 2.2.3 ###############");
 			admLogos.setImagen(logos.getImagen());
+			logger.info("######## hospital 2.2.4 ###############");
 			admLogos.setNombre(logos.getNombre());
+			logger.info("######## hospital 2.2.5 ###############");
 			admLogos.setPosicion(logos.getPosicion());
+			logger.info("######## hospital 2.2.6 ###############");
 			admLogos.setFechaRegistro(new Date());
+			logger.info("######## hospital 2.2.7 ###############");
 			admLogos.setUsuarioRegistro(SecurityContextHolder.getContext().getAuthentication().getName());
+			logger.info("######## hospital 2.2.8 ###############");
 			admLogos.setEstatus(logos.getEstatus());
-
+			logger.info("######## hospital 2.2.9 ###############");
+			logger.info(admLogos.toString());
+			System.out.println(admLogos);
+			System.out.println(admLogos.toString());
 			hospitalDAO.guardarEntidad(admLogos);
+			logger.info("######## hospital 2.2.10 ###############");
 		}
+		logger.info("######## hospital 2.3 ###############");
 
 		if (hospital != 0) {
 			if (foliadorService.guardarFoliadores(hospital) == 1) {
+				logger.info("######## hospital 2.4 ###############");
 				CoreAseguradoraHospital entidad = new CoreAseguradoraHospital();
 				entidad.setAseguradoraId(0);
 				entidad.setHospitalId(hospital);

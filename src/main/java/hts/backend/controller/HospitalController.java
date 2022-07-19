@@ -10,6 +10,8 @@ package hts.backend.controller;
 import hts.backend.model.RespuestaGenerica;
 import hts.backend.model.dto.HospitalCluesDTO;
 import hts.backend.model.dto.HospitalDTO;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +26,7 @@ import hts.backend.service.HospitalService;
 @RequestMapping({"/hospital"})
 public class HospitalController {
     private final HospitalService hospitalService;
+    private static final Log logger = LogFactory.getLog(CatalogosController.class);
 
     @Autowired
     public HospitalController(HospitalService hospitalService) {
@@ -230,6 +233,8 @@ public class HospitalController {
     public RespuestaGenerica guardarHospital(@RequestBody HospitalDTO hospitaldto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         hospitaldto.setUsuarioCve(auth.getName());
+        logger.info("######## aqui siiii ###############");
+        logger.info(hospitaldto);
         return this.hospitalService.guardarHospital(hospitaldto);
     }
 

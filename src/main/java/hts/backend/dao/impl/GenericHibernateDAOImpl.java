@@ -334,12 +334,25 @@ public abstract class GenericHibernateDAOImpl implements GenericHibernateDAO {
 
 
 	public <T extends Serializable> int guardarEntidad(T entidad) {
+		Transaction tx = null;
+		Session s = getCurrentSession();
 		try {
-			this.save(entidad);
-			this.flush();
+			try {
+				tx = s.beginTransaction();
+				s.save(entidad);
+				tx.commit();
+			} catch (HibernateException he) {
+				if (tx != null)
+					tx.rollback();
+				s.close();
+				throw he;
+			}
+			s.close();
+			//System.out.println("GUARDA ENTIDAD: DONE");
 			return 1;
 		} catch (Exception e) {
-			e.getMessage();
+			s.close();
+			e.printStackTrace();
 			return 0;
 		}
 	}

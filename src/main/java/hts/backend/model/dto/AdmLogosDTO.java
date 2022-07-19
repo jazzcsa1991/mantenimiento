@@ -4,6 +4,7 @@ package hts.backend.model.dto;
 import java.util.Date;
 //import java.util.Date;
 //import java.util.Date;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class AdmLogosDTO {
 
@@ -23,7 +24,11 @@ public class AdmLogosDTO {
 
     private String usuarioRegistro;
 
-
+    @Override
+    public String toString()
+    {
+        return ToStringBuilder.reflectionToString(this);
+    }
     public Integer getLogosId() {
         return logosId;
     }
