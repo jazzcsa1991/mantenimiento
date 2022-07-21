@@ -109,7 +109,7 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
 
-		config.addAllowedOrigin("*");
+		config.addAllowedOriginPattern("*");
 		config.addExposedHeader(Globales.seg_Header);
 
 		config.addAllowedMethod(HttpMethod.POST);
